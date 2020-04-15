@@ -81,6 +81,16 @@
     - mysql_log | default(true)
     - mysql_log_error | default(false)
   tags: ['skip_ansible_galaxy']
+  
+- name: Create /var/log directory for logging if it does not exist
+  file:
+    path: "/var/log/mariadb/"
+    state: directory
+    recurse: yes
+    force: yes
+    owner: mysql
+    group: mysql
+    mode: 0664   
 
 - name: Ensure MySQL is started and enabled on boot.
   service: "name={{ mysql_daemon }} state=started enabled={{ mysql_enabled_on_startup }}"
